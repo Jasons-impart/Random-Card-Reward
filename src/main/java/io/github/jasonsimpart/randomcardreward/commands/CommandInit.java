@@ -16,6 +16,7 @@ public class CommandInit {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         CommandsAllGacha.register(dispatcher);
+        CommandSummonBanner.register(dispatcher);
 
         LogUtils.getLogger().info("Registered commands");
 
