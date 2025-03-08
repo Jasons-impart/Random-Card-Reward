@@ -17,6 +17,7 @@ public class CommandInit {
 
         CommandsAllGacha.register(dispatcher);
         CommandSummonBanner.register(dispatcher);
+        CommandUseCard.register(dispatcher);
 
         LogUtils.getLogger().info("Registered commands");
 

@@ -3,12 +3,15 @@ package io.github.jasonsimpart.randomcardreward.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
+import io.github.jasonsimpart.randomcardreward.gacha.AllGachas;
 import io.github.jasonsimpart.randomcardreward.summonbanner.SummonBannerMenuProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkHooks;
+
+import java.util.ArrayList;
 
 public class CommandSummonBanner {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -18,6 +21,16 @@ public class CommandSummonBanner {
                         .requires(r ->  r.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("gachaId", LongArgumentType.longArg())
+                                        .suggests((context, builder) -> {
+                                            String input = builder.getRemaining();
+                                            AllGachas.getGachaIds().forEach(id -> {
+                                                if (String.valueOf(id).startsWith(input)) {
+                                                    builder.suggest(String.valueOf(id));
+                                                }
+                                            });
+                                            return builder.buildFuture();
+
+                                        })
                                         .executes(context -> {
                                             return summonBanner(EntityArgument.getPlayer(context, "player"), LongArgumentType.getLong(context, "gachaId"));
                                         })

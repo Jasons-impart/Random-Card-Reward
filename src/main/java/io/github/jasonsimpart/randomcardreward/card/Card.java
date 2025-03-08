@@ -1,10 +1,12 @@
 package io.github.jasonsimpart.randomcardreward.card;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Card {
+public abstract class Card {
     long id;
     public Card() {
         this.id = ThreadLocalRandom.current().nextLong();
@@ -14,9 +16,7 @@ public class Card {
         this.id = id;
     }
 
-    public void use(Player player) {
-
-    }
+    public abstract void use(Player player);
 
     public long getId() {
         return id;
